@@ -1,31 +1,56 @@
-// function selectUserByName(state, name) {
-//   const filteredNames = state.users.filter(user => user.name === name);
-//   return filteredNames;
-// }
-
-export default function getAppointmentsForDay(state, day) {
+const getAppointmentsForDay = (state, day) => {
   let filteredDays = state.days.filter(thisDay => thisDay.name === day);
-  // console.log(filteredDays)
   if (filteredDays === [] || !day || filteredDays[0] === undefined) {
     return []
   }
 
   const { appointments } = filteredDays[0]
-  // console.log(appointments)
-
-  // const answer = state.appointments.filter(thisDay => thisDay.name === day);
-
   const answer = []
-  // console.log(Object.values(state.appointments))
+
   for (let appointment of Object.values(state.appointments)) {
-    // console.log(appointment)
 
     if (appointments.includes(appointment.id)) {
       answer.push(appointment)
     }
   }
-
-  // console.log(answer)
-
   return answer;
+}
+
+const getInterview = (state, day) => {
+  if (!day || !day.interviewer) {
+    return null
+  }
+  // console.log(day);
+  // console.log(getAppointmentsForDay(state, day))
+  // console.log(state.interviewers[day.interviewer])
+  return {
+    ...day,
+    interviewer: state.interviewers[day.interviewer],
+  }
+}
+
+const getInterviewersForDay = (state, day) => {
+  let filteredDays = state.days.filter(stateDay => day === stateDay.name);  
+  if (!(filteredDays !== [] && day && filteredDays[0])) {
+    return [];
+  }  
+  const { appointments } = filteredDays[0];
+  const interviewers = [];
+  
+  for (let appointment of Object.values(state.appointments)) {
+    // let stateAppts = state.appointments[appointment];
+    if (!appointments.includes(appointment.id) && appointment.interview) {
+      let interviewer = appointment.interview.interviewer.toString();
+      if (!interviewers.includes(state.interviewers[interviewer])) {
+        interviewers.push(state.interviewers[interviewer]);
+      }
+    }
+  }
+  return interviewers;
+}
+
+export {
+  getAppointmentsForDay,
+  getInterview,
+  getInterviewersForDay
 }
