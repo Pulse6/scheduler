@@ -112,15 +112,4 @@ export default function Appointment(props) {
       )}
     </article>
   )
-
-  // return (props.interview ?
-  //   <article className="appointment">
-  //     <Header time={props.time} />
-  //     <Show student={props.interview.student} interviewer={props.interview.interviewer} />
-  //   </article> :
-  //   <article className="appointment">
-  //     <Header time={props.time} />
-  //     <Empty />
-  //   </article>
-  // )
 }
