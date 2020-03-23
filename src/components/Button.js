@@ -4,10 +4,6 @@ import "components/Button.scss";
 
 import classnames from "classnames/bind";
 
-// export default function Button(props) {
-//    return <button>{props.children}</button>;
-// } 
-
 export default function Button(props) {
 
    const buttonClass = classnames("button", {

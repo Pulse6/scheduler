@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 
 import useVisualMode from "../../hooks/useVisualMode";
 
@@ -25,17 +25,18 @@ const ERROR_DELETE = "ERROR_DELETE";
 
 
 export default function Appointment(props) {
-  // console.log(props.interview)
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
 
   function save(name, interviewer) {
+    if (!name || ! interviewer) {
+      return transition(ERROR_SAVE)
+    }
     const interview = {
       student: name,
       interviewer
     };
-    // console.log(interview)
     transition(SAVING)
     props.bookInterview(props.id, interview)
       .then(() => {
@@ -49,7 +50,6 @@ export default function Appointment(props) {
       student: name,
       interviewer
     };
-    // console.log(interview)
     transition(DELETING, true)
     props.deleteInterview(props.id, interview)
       .then(() => {
@@ -57,14 +57,23 @@ export default function Appointment(props) {
       })
       .catch(() => transition(ERROR_DELETE, true));
   }
-
+//////////////////////////////////////////////////////
+  useEffect(() => {
+    if (props.interview && mode === EMPTY) {
+     transition(SHOW);
+    }
+    if (props.interview === null && mode === SHOW) {
+     transition(EMPTY);
+    }
+   }, [props.interview, transition, mode]);
+//////////////////////////////////////////////////////
   return (
     <article className="appointment">
       <Header time={props.time} />
       {mode === EMPTY &&
         <Empty onAdd={() => transition(CREATE)}
         />}
-      {mode === SHOW && (
+      {mode === SHOW && props.interview && (
         <Show
           student={props.interview.student}
           interviewer={props.interview.interviewer}
@@ -101,14 +110,10 @@ export default function Appointment(props) {
         />
       )}
       {mode === ERROR_SAVE && (
-        <ErrorSaving
-        onClose={() => back()}
-        />
+        <ErrorSaving onClose={() => back()}/>
       )}
       {mode === ERROR_DELETE && (
-        <ErrorDelete
-        onClose={() => back()}
-        />
+        <ErrorDelete onClose={() => back()}/>
       )}
     </article>
   )

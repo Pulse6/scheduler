@@ -21,8 +21,3 @@ export default function InterviewerListItem(props) {
     </li>
   );
 }
-
-  // const DayClass = classnames("day-list__item", {
-  //   "day-list__item--selected": props.selected,
-  //   "day-list__item--full": props.spots === 0
-  // });

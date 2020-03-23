@@ -20,9 +20,6 @@ const getInterview = (state, day) => {
   if (!day || !day.interviewer) {
     return null
   }
-  // console.log(day);
-  // console.log(getAppointmentsForDay(state, day))
-  // console.log(state.interviewers[day.interviewer])
   return {
     ...day,
     interviewer: state.interviewers[day.interviewer],
@@ -38,7 +35,6 @@ const getInterviewersForDay = (state, day) => {
   const interviewers = [];
   
   for (let appointment of Object.values(state.appointments)) {
-    // let stateAppts = state.appointments[appointment];
     if (!appointments.includes(appointment.id) && appointment.interview) {
       let interviewer = appointment.interview.interviewer.toString();
       if (!interviewers.includes(state.interviewers[interviewer])) {
