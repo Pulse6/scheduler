@@ -78,7 +78,7 @@ test("getInterviewersForDay returns an array", () => {
 
 test("getInterviewersForDay returns an array with a length matching the number of appointments for that day", () => {
   const result = getInterviewersForDay(state, "Monday");
-  expect(result.length).toEqual(3);
+  expect(result.length).toEqual(1);
 });
 
 test("getInterviewersForDay returns an array containing the correct appointment objects", () => {

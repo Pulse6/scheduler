@@ -32,7 +32,7 @@ export function useApplicationData() {
   function deleteInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
-      interview: { ...interview }
+      interview: null
     };
     const appointments = {
       ...state.appointments,
@@ -45,22 +45,34 @@ export function useApplicationData() {
   }
 //////////////////////////////////////////
   function update(id, interview) {
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
+    if (!interview) {
+      const appointment = {
+        ...state.appointments[id],
+        interview: null
     };
     const appointments = {
       ...state.appointments,
       [id]: appointment
     };
     setState(state => ({ ...state, appointments }))
+    } else {
+      const appointment = {
+        ...state.appointments[id],
+        interview: { ...interview }
+    };
+      const appointments = {
+        ...state.appointments,
+        [id]: appointment
+    };
+    setState(state => ({ ...state, appointments }))
+    }
   }
 
   useEffect(() => {
     socket.onopen = function () {
       socket.send("ping")
     }
-    socket.close()
+    // socket.close()
   }, [])
 
   socket.onmessage = function (event) {
@@ -71,9 +83,14 @@ export function useApplicationData() {
   }
   //////////////////////////////////////////
 
-  // useEffect(() => {
-  //   axios.get("http://localhost:8001/api/days")
-  //     .then(days => setState(state => ({ ...state, days: days.data })))
+  useEffect(() => {
+    axios.get("http://localhost:8001/api/days")
+      .then(days => setState(state => ({ ...state, days: days.data })))
+  }, [state.appointments])
+
+  //   useEffect(() => {
+  //   axios.get("http://localhost:8001/api/appointments")
+  //     .then(appointments => setState(state => ({ ...state, appointments: appointments.data })))
   // }, [state.appointments])
 
   useEffect(() => {
@@ -87,7 +104,7 @@ export function useApplicationData() {
       .catch(err => {
         console.error(err)
       })
-  }, [state.appointments])
+  }, [])
 
   return { state, setDay, bookInterview, deleteInterview }
 }

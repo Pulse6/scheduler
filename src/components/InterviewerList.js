@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from 'prop-types';
 
 import "components/InterviewerList.scss";
 
@@ -7,6 +8,11 @@ import "components/InterviewerList.scss";
 import InterviewerListItem from "components/InterviewerListItem";
 
 export default function InterviewerList(props) {
+  // console.log("this one", props)
+  InterviewerList.propTypes = {
+    value: PropTypes.number,
+    onChange: PropTypes.func.isRequired
+  };
 // console.log(props.interviewers)
   const interviewers = props.interviewers.map(interviewer => {
     return (
