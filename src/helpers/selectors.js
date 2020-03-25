@@ -32,9 +32,11 @@ const getInterviewersForDay = (state, day) => {
   if (!(filteredDays !== [] && day && filteredDays[0])) {
     return [];
   }
-  // appointments for given day
+  // interviewers for given day
   const { interviewers } = filteredDays[0];
-  const interviewerList = [];  for (const interviewer of interviewers) {
+  const interviewerList = [];
+  
+  for (const interviewer of interviewers) {
     interviewerList.push(state.interviewers[interviewer]);
   }
   return interviewerList;
