@@ -57,7 +57,7 @@ export default function Appointment(props) {
       })
       .catch(() => transition(ERROR_DELETE, true));
   }
-//////////////////////////////////////////////////////
+//           for socket               //
   useEffect(() => {
     if (props.interview && mode === EMPTY) {
      transition(SHOW);
@@ -66,9 +66,9 @@ export default function Appointment(props) {
      transition(EMPTY);
     }
    }, [props.interview, transition, mode]);
-//////////////////////////////////////////////////////
+/////////////////////////////////////////
   return (
-    <article className="appointment">
+    <article className="appointment" data-testid="appointment">
       <Header time={props.time} />
       {mode === EMPTY &&
         <Empty onAdd={() => transition(CREATE)}
