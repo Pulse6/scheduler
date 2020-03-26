@@ -22,3 +22,4 @@ npm test
 npm run storybook
 ```
 ## Preview
+![landing page](https://github.com/Pulse6/scheduler/blob/master/docs/preview.png)
