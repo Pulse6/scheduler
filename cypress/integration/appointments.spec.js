@@ -1,5 +1,5 @@
 describe("Navigation", () => {
-  xit("should visit root", () => {
+  it("should visit root", () => {
     cy.visit("/");
   });
   it("it should add", () => {
@@ -20,7 +20,7 @@ describe("Navigation", () => {
     cy.contains(".appointment__card--show", "Sylvia Palmer");
     // .should("have.css", "background-color", "rgb(242, 242, 242)");
   });
-  xit("should edit an interview", () => {
+  it("should edit an interview", () => {
     cy.get("[alt=Edit]")
       .first()
       .click({ force: true });
